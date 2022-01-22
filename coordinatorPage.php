@@ -134,6 +134,7 @@ session_start();
         
         <div class="container py-5" id="page-container">
             <div class="row">
+            <h1>Calendar</h1>
                 <div class="col-md-9">
                     <div id="calendar"></div>
                 </div>

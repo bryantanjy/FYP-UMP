@@ -1,15 +1,6 @@
 <?php
 include "databaseFYP.php";
 session_start();
-
-$query = $_POST["output"];
-$result = mysqli_query($conn, "SELECT s.StudentID, s.Student_Name, s.Faculty_Code, a.SupervisorID, a.Supervisor_Name, i.IndustrialID, i.Industry_Name, e.EvaluatorID, e.Evaluator_Name 
-FROM student s 
-INNER JOIN evaluator e ON s.EvaluatorID = e.EvaluatorID
-INNER JOIN supervisor a ON s.supervisorID = a.supervisorID
-INNER JOIN industrial i ON s.IndustrialID = i.IndustrialID
-WHERE s.StudentID LIKE '%".$query."%'") or die(mysqli_error($conn));
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,6 +65,12 @@ WHERE s.StudentID LIKE '%".$query."%'") or die(mysqli_error($conn));
                         </tr>
         
                         <?php
+                        $query = $_POST["output"];
+                        $result = mysqli_query($conn, "SELECT student.StudentID, student.Student_Name, student.Faculty_Code, evaluator.EvaluatorID, evaluator.Evaluator_Name, industrial.IndustrialID, industrial.Industry_Name
+                        FROM student
+                        INNER JOIN evaluator ON student.EvaluatorID = evaluator.EvaluatorID
+                        INNER JOIN industrial ON student.IndustrialID = industrial.IndustrialID
+                        WHERE student.StudentID LIKE '%".$query."%'") or die(mysqli_error($conn));
                         if(mysqli_num_rows($result) > 0){ // if one or more rows are returned do following
                             while($row = mysqli_fetch_array($result)){
                                 echo "<tr>";
